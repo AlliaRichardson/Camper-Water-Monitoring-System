@@ -1,0 +1,30 @@
+digital 4,5,6,7 = relay 4, 3, 2, 1
+
+//Arduino Relay Shield Control from DIGITAL I/O
+//Author Howard Richardson
+//5/21/2019 Free to USE
+//For use with external audio recording.
+//For use with Raspberry Pi Pi-PlatesDAQ
+
+
+int MotorControl = 7;    // Digital Arduino Pin used to control the motor
+int RelayInput = 13;      // Digital input from Raspberry Digital Output
+
+// the setup routine runs once when you press reset:
+void setup()  {
+  // declare pin 7 to be an output:
+  pinMode(MotorControl, OUTPUT);
+  // declare pin 13 as digital input control
+  pinMode(RelayInput, INPUT);
+}
+
+// the loop routine runs over and over again forever:
+void loop()  {
+  digitalWrite(MotorControl,LOW); //Sets Relay 1 to it's resting state. Normally open contacts are open
+  while (digitalRead(RelayInput)==LOW ) {  //because the digital output is the inverse to the DIGITAL input of the Arduino We read for a low from the PI
+  	digitalWrite(MotorControl,HIGH);// NO3 and COM3 Connected (the motor is running)
+  	delay(10000); // wait 1000 milliseconds (1 second)
+  	digitalWrite(MotorControl,LOW);// NO3 and COM3 Disconnected (the motor is not running)
+  	delay(1000); // wait 1000 milliseconds (1 second)
+	}
+}
