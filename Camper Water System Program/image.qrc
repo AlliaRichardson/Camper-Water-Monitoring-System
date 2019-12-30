@@ -1,8 +1,0 @@
-<RCC>
-  <qresource prefix="images">
-    <file>icons/AppPwrBttnImg.jpg</file>
-    <file>icons/background1.jpg</file>
-    <file>icons/RaspPiPwrBttnImg.jpg</file>
-    <file>icons/RefreshBttnImg.jpg</file>
-  </qresource>
-</RCC>
