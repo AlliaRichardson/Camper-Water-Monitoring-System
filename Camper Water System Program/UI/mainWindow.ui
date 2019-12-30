@@ -101,9 +101,9 @@
     <property name="tabBarAutoHide">
      <bool>false</bool>
     </property>
-    <widget class="QWidget" name="SensorInformation">
+    <widget class="QWidget" name="Sensors">
      <attribute name="title">
-      <string>SensorInformation</string>
+      <string>Sensors</string>
      </attribute>
      <attribute name="toolTip">
       <string>Click to see status of sensors</string>
@@ -295,9 +295,9 @@
      <zorder>BlackWaterProgressBar</zorder>
      <zorder>GreyWaterProgressBar</zorder>
     </widget>
-    <widget class="QWidget" name="UsageHistory">
+    <widget class="QWidget" name="Usage">
      <attribute name="title">
-      <string>UsageHistory</string>
+      <string>Usage</string>
      </attribute>
      <attribute name="toolTip">
       <string>Click to see a graph of the sensor usage.</string>

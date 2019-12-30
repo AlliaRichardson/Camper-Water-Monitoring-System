@@ -184,7 +184,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     #        Not applicable  
     def on_alarmWindow_turnOn (self,  turnOnAlarm,  freshWtrVal,  
             greyWtrVal,  blackWtrVal,  batteryVal):
-        alarmSoundCounter = 0
         #gets Values for toString
         alarmString = Alarm.toString(freshWtrVal,  
             greyWtrVal,  blackWtrVal,  batteryVal) 
@@ -196,20 +195,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             #If the window is closed alarmWindow is set to false for closed
             if choice == QMessageBox.Ok:
                 Alarm.resetWindow()
-            #if user clicks exit button(red x in corner) reset alarm window
+            #do nothing
             else:
-                Alarm.resetWindow()
-        print(Alarm.getWindowState)            
+                pass
+        #If the alarm window is still up
         if Alarm.getWindowState():
-            if alarmSoundCounter == 0:
-                SensorUsageInfo.soundTheAlarm('s')
-                alarmSoundCounter = alarmSoundCounter + 1
-            elif alarmSoundCounter % 6:         #        if alarmSoundCounter > 0:
-                alarmSoundCounter = 0
-                SensorUsageInfo.soundTheAlarm('s')                    
-            else:
-                 alarmSoundCounter = alarmSoundCounter + 1
-        
+            SensorUsageInfo.soundTheAlarm('s')
     
 #-------------------------------------------------------------------------------
     #   Method - update_graph
@@ -337,18 +328,14 @@ class ThreadClass(QtCore.QThread):
         
         #while true, obtain the values, store the values, and emit the values
         while True:
-            #gets Values for sensors
+            #gets Values for sensors and alarm
             freshWaterVal = SensorUsageInfo.getSensorPercentage(3.5, 1.9, 0, 'W')
-            greyWaterVal = SensorUsageInfo.getSensorPercentage(3.8, 2.2, 1, 'W')
-            blackWaterVal = SensorUsageInfo.getSensorPercentage(3.7, 1.9, 2, 'W')
-            batteryVal = SensorUsageInfo.getSensorPercentage(0, 5, 7, 'B')
-
+            greyWaterVal =  SensorUsageInfo.getSensorPercentage(3.8, 2.2, 1, 'W')
+            blackWaterVal =  SensorUsageInfo.getSensorPercentage(3.7, 1.9, 2, 'W')
+            batteryVal =  SensorUsageInfo.getSensorPercentage(0, 5, 7, 'B')
             alarmVal = Alarm.alarmActivation(freshWaterVal,  greyWaterVal,  
                 blackWaterVal,  batteryVal)
-                
-#         if Alarm.getWindowState():
-                #sound alarm
-                
+
             # Emits the signal 
             self.freshWaterSig.emit(freshWaterVal)
             self.greyWaterSig.emit(greyWaterVal)
@@ -357,20 +344,15 @@ class ThreadClass(QtCore.QThread):
             self.alarmSig.emit(alarmVal,  freshWaterVal,  greyWaterVal,  blackWaterVal,  
                 batteryVal)
             #Inputs the values into the data base.
-            if (counterDatabaseInput % 15) == 0: #records ever 10 run cycles
+            if (counterDatabaseInput % 1) == 0: #records ever 10 run cycles
                 Database.input(freshWaterVal,  greyWaterVal,  blackWaterVal,  
                 batteryVal)
                 counterDatabaseInput = 0
             #increments counter
             counterDatabaseInput = counterDatabaseInput + 1
             #sleeps for 2 seconds
-            time.sleep (1)
-    def checkValueBounds(percent):
-        if percent > 100:
-            percent = 100
-        if percent < 0:
-            percent = 0
-        return percent
+            time.sleep (2)
+
 #------------------------------------------------------------------------------- 
     #Flushes everything but the kitchen sink
     def flush(self):

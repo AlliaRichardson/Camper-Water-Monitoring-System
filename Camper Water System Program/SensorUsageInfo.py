@@ -1,7 +1,7 @@
 #   SensorUsageInfo.py
 #-----------------------------imports-------------------------------------------
 import piplates.DAQCplate as DAQC
-import time
+#import time
 #-------------------------------------------------------------------------------
 #   Method getSensorPercentage
 #    Description:
@@ -62,7 +62,6 @@ def soundTheAlarm(state):
             DAQC.clrDOUTbit(0, 0)
         if state == 's':
             DAQC.setDOUTbit(0, 0)
-        #time.sleep(10)
     #If not voltage was read or it errored
     except:
         print("")
