@@ -147,7 +147,7 @@ def lastInput ():
         myConnection = mysql.connector.connect(
             host='localhost',    
             user='root',         
-            passwd='raspberry',  
+            passwd='5733AdR',  
             db='CamperWaterDB') 
 
         #what will be queried in the database
