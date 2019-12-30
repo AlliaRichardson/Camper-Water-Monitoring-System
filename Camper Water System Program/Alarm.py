@@ -12,6 +12,7 @@ greyWtrState = False
 blackWtrState = False
 batteryState = False
 changeState = False
+isAlarmReset = False
 
 #-------------------------------------------------------------------------------
 #   Method - getAlarmState
@@ -62,10 +63,6 @@ def toString( freshWtrVal,  greyWtrVal,  blackWtrVal,  batteryVal ):
     blackWtrStr = ""
     batteryStr = ""
 
-    print (freshWtrVal)
-    print(greyWtrVal)
-    print(blackWtrVal)
-    print(batteryVal)
     #if any of the sensors are in the danger zone set sensor string
     if freshWtrVal <=20:
         freshWtrStr = "The fresh water tank is low at " + \
@@ -74,7 +71,7 @@ def toString( freshWtrVal,  greyWtrVal,  blackWtrVal,  batteryVal ):
        greyWtrStr= "The grey water tank is high at " + \
         str(greyWtrVal) + "%.\n"
     if blackWtrVal >=80:
-        blackWtrStr = "The shitter's full at " + \
+        blackWtrStr = "The black water tank is high at " + \
         str(blackWtrVal) + "%.\n"
     if batteryVal <=60:
         batteryStr = "Battery is running low at " \
@@ -103,6 +100,7 @@ def alarmActivation(freshWtrVal,  greyWtrVal,  blackWtrVal,  batteryVal):
     global blackWtrState
     global batteryState
     global changeState
+    global isAlarmReset
 
     #initializes variables
     freshWtr = False
@@ -119,18 +117,20 @@ def alarmActivation(freshWtrVal,  greyWtrVal,  blackWtrVal,  batteryVal):
         blackWtr = True
     if batteryVal <=60:
         battery = True
-
     #Checks if there has been a change in sensor states
     if not(freshWtrState == freshWtr) or not(greyWtrState == greyWtr) or \
         not(blackWtrState == blackWtr) or not(batteryState == battery):
-             changeState = True
-    #if sensors are all reading within good range resets alarm and change state
-    if not(freshWtr) and not(greyWtr) and not(blackWtr) and not(battery):
-        resetAlarm()
+            changeState = True
+            isAlarmReset = True
+    #else change state is false
+    else:
         changeState = False
+    #if sensors are all reading within good range resets alarm and change state
+    if not(freshWtr) and not(greyWtr) and not(blackWtr) and not(battery) and \
+        isAlarmReset and changeState:
+            resetAlarm()
 
     #sets the sensor states
-
     freshWtrState = freshWtr
     greyWtrState = greyWtr
     blackWtrState = blackWtr
@@ -155,6 +155,7 @@ def resetAlarm ():
     global blackWtrState
     global batteryState
     global changeState
+    global isAlarmReset
 
     #sets all global to false    
     freshWtrState = False
@@ -162,6 +163,7 @@ def resetAlarm ():
     blackWtrState = False
     batteryState = False
     changeState = False
+    isAlarmReset - False
 
 #-------------------------------------------------------------------------------
 #   Method - resetWindow

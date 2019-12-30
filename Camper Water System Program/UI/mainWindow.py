@@ -152,7 +152,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         #Sets the value that will will be shown in the progress bar
         self.BatteryProgressBar.setProperty("value", value)
         #If the value is greater than or equal to 80% the progress bar is green
-        if value >= 50:
+        if value >= 80:
             palette = QtGui.QPalette(self.palette())
             palette.setColor(QtGui.QPalette.Highlight, 
                 QtGui.QColor(QtCore.Qt.green))
@@ -182,29 +182,22 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     #       Boolean - turnOnAlarm if the alarm needs to be turned on
     #    Return:
     #        Not applicable  
-    def on_alarmWindow_turnOn (self,  turnOnAlarm): 
+    def on_alarmWindow_turnOn (self,  turnOnAlarm,  freshWtrVal,  
+            greyWtrVal,  blackWtrVal,  batteryVal): 
         #gets Values for toString
-        freshWtrVal,  greyWtrVal,  blackWtrVal,  batteryVal = \
-                Database.lastInput()
         alarmString = Alarm.toString(freshWtrVal,  
             greyWtrVal,  blackWtrVal,  batteryVal) 
-        #if the alarm is on and the toString is not empty activate window        
         #if Alarm.getWindowState:
           #  SensorUsageInfo.soundTheAlarm()
         if Alarm.getAlarmState(turnOnAlarm):
-            #if the alrm string is empty don't open alarm window
-            if (alarmString == ""):
-                Alarm.resetWindow() 
-            #Otherwise, open alarm window
+            choice = QMessageBox.warning(self, 'Alarm', 
+                alarmString, QMessageBox.Ok)
+            #If the window is closed alarmWindow is set to false for closed
+            if choice == QMessageBox.Ok:
+                Alarm.resetWindow()
+            #if user clicks exit button(red x in corner) reset alarm window
             else:
-                choice = QMessageBox.warning(self, 'Alarm', 
-                    alarmString, QMessageBox.Ok)
-                #If the window is closed alarmWindow is set to false for closed
-                if choice == QMessageBox.Ok:
-                    Alarm.resetWindow()
-                #if user clicks exit button(red x in corner) reset alarm window
-                else:
-                    Alarm.resetWindow()  
+                Alarm.resetWindow()  
     
 #-------------------------------------------------------------------------------
     #   Method - update_graph
@@ -309,7 +302,7 @@ class ThreadClass(QtCore.QThread):
     greyWaterSig = QtCore.pyqtSignal(int)
     blackWaterSig = QtCore.pyqtSignal(int)
     batterySig = QtCore.pyqtSignal(int)
-    alarmSig = QtCore.pyqtSignal(bool)
+    alarmSig = QtCore.pyqtSignal(bool,  int,  int,  int,  int)
 
     #Constructor for the ThreadClass
     def __init__(self, parent=None):
@@ -336,7 +329,8 @@ class ThreadClass(QtCore.QThread):
             freshWaterVal = SensorUsageInfo.getSensorPercentage(3.5, 1.9, 0, 'W')
             greyWaterVal = SensorUsageInfo.getSensorPercentage(3.8, 2.2, 1, 'W')
             blackWaterVal = SensorUsageInfo.getSensorPercentage(3.7, 1.9, 2, 'W')
-            batteryVal =  SensorUsageInfo.getSensorPercentage(0, 5, 7, 'B')
+            batteryVal = SensorUsageInfo.getSensorPercentage(0, 5, 7, 'B')
+
             alarmVal = Alarm.alarmActivation(freshWaterVal,  greyWaterVal,  
                 blackWaterVal,  batteryVal)
                 
@@ -348,7 +342,8 @@ class ThreadClass(QtCore.QThread):
             self.greyWaterSig.emit(greyWaterVal)
             self.blackWaterSig.emit(blackWaterVal)
             self.batterySig.emit(batteryVal)
-            self.alarmSig.emit(alarmVal)
+            self.alarmSig.emit(alarmVal,  freshWaterVal,  greyWaterVal,  blackWaterVal,  
+                batteryVal)
             #Inputs the values into the data base.
             if (counterDatabaseInput % 1) == 0: #records ever 10 run cycles
                 Database.input(freshWaterVal,  greyWaterVal,  blackWaterVal,  
@@ -357,7 +352,12 @@ class ThreadClass(QtCore.QThread):
             counterDatabaseInput = counterDatabaseInput + 1
             #sleeps for 2 seconds
             time.sleep (1)
-                
+    def checkValueBounds(percent):
+        if percent > 100:
+            percent = 100
+        if percent < 0:
+            percent = 0
+        return percent
 #------------------------------------------------------------------------------- 
     #Flushes everything but the kitchen sink
     def flush(self):

@@ -165,7 +165,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralWidget)
 
         self.retranslateUi(MainWindow)
-        self.TabWidget.setCurrentIndex(1)
+        self.TabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         MainWindow.setTabOrder(self.powerApp, self.powerRasberry)
         MainWindow.setTabOrder(self.powerRasberry, self.CheckGraphs)
