@@ -6,15 +6,11 @@ import Database
 import sys
 import time
 import randomNum
-import datetime
-from subprocess import call
 
+from subprocess import call
 from PyQt5 import QtCore,  QtGui
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QMainWindow, QMessageBox
-from matplotlib.backends.backend_qt5agg import (NavigationToolbar2QT as NavigationToolbar)
-import numpy as np
-import random
 from .Ui_mainWindow import Ui_MainWindow
 
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -162,13 +158,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.SensorGraph.canvas.axes.plot(dateTimeArr,  blackWaterArr)        #(time, blackWaterArr)     #blackWater
         self.SensorGraph.canvas.axes.plot(dateTimeArr, batteryArr)    #(time, batteryArr)    #battery
         #creates the legend
-        self.SensorGraph.canvas.axes.legend(('FreshWater', 'GreyWater',  'BlackWater',  'Battery'), loc='right')
+        self.SensorGraph.canvas.axes.legend(('FreshWater', 'GreyWater',  'BlackWater',  'Battery'), loc='center left', bbox_to_anchor=(1, 0.5))
         #Angles the x-axis
         self.SensorGraph.canvas.axes.xaxis.set_tick_params(rotation=45)
         #Titles of the graphs
         self.SensorGraph.canvas.axes.set_title('Sensors')
-        self.SensorGraph.canvas.axes.set_xlabel('Date')
+        self.SensorGraph.canvas.axes.set_xlabel('Date and Time')
         self.SensorGraph.canvas.axes.set_ylabel('Percentage')
+        #Auto adjusts figure
+        self.SensorGraph.canvas.axes.figure.tight_layout()
         #Draws the graphs
         self.SensorGraph.canvas.draw()
         
@@ -225,11 +223,11 @@ class ThreadClass(QtCore.QThread):
         counterDatabaseInput = 0
         while True:
             #gets Values for sensors
-            freshWaterVal =  WaterUsageInfo.getWaterUsage(3.5, 1.9, 0)
-            greyWaterVal = WaterUsageInfo.getWaterUsage(3.8, 2.2, 1)
-            blackWaterVal = WaterUsageInfo.getWaterUsage(3.7, 1.9, 2)
+            freshWaterVal =  WaterUsageInfo.getWaterUsage(3.55, 1.9, 0)
+            greyWaterVal = WaterUsageInfo.getWaterUsage(3.74, 2.2, 1)
+            blackWaterVal = WaterUsageInfo.getWaterUsage(3.43, 1.9, 2)
             batteryVal =  randomNum.getRandNum() #BatteryInfo.getBattery()
-            #freshWaterVal,  greyWaterVal,  blackWaterVal,  batteryVal = Database.lastInput(freshWaterVal,  greyWaterVal,  blackWaterVal,  batteryVal)
+            freshWaterVal,  greyWaterVal,  blackWaterVal,  batteryVal = Database.lastInput(freshWaterVal,  greyWaterVal,  blackWaterVal,  batteryVal)
             # Emits the signal 
             self.freshWaterSig.emit(freshWaterVal)
             self.greyWaterSig.emit(greyWaterVal)
@@ -237,7 +235,7 @@ class ThreadClass(QtCore.QThread):
             self.batterySig.emit(batteryVal)
             #Inputs the values into the data base.
             print(counterDatabaseInput)
-            if (counterDatabaseInput % 1) == 0: #records ever 10 run cycles
+            if (counterDatabaseInput % 15) == 0: #records ever 10 run cycles
                 Database.input(freshWaterVal,  greyWaterVal,  blackWaterVal,  batteryVal)
             #increments counter
             counterDatabaseInput = counterDatabaseInput + 1

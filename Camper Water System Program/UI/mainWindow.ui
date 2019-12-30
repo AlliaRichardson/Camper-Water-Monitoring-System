@@ -6,13 +6,13 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>720</width>
+    <width>800</width>
     <height>480</height>
    </rect>
   </property>
   <property name="maximumSize">
    <size>
-    <width>720</width>
+    <width>800</width>
     <height>480</height>
    </size>
   </property>
@@ -34,17 +34,17 @@
    </property>
    <property name="maximumSize">
     <size>
-     <width>720</width>
+     <width>800</width>
      <height>480</height>
     </size>
    </property>
    <widget class="QTabWidget" name="TabWidget">
     <property name="geometry">
      <rect>
-      <x>1</x>
-      <y>-10</y>
-      <width>720</width>
-      <height>480</height>
+      <x>0</x>
+      <y>0</y>
+      <width>800</width>
+      <height>470</height>
      </rect>
     </property>
     <property name="minimumSize">
@@ -55,14 +55,20 @@
     </property>
     <property name="maximumSize">
      <size>
-      <width>720</width>
-      <height>850</height>
+      <width>800</width>
+      <height>480</height>
      </size>
     </property>
     <property name="font">
      <font>
       <pointsize>12</pointsize>
      </font>
+    </property>
+    <property name="statusTip">
+     <string/>
+    </property>
+    <property name="whatsThis">
+     <string/>
     </property>
     <property name="accessibleName">
      <string/>
@@ -74,7 +80,7 @@
      <enum>QTabWidget::North</enum>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <property name="usesScrollButtons">
      <bool>true</bool>
@@ -101,13 +107,89 @@
      <attribute name="whatsThis">
       <string>Shows status of sensors</string>
      </attribute>
+     <widget class="QLabel" name="GreyWaterLabel">
+      <property name="geometry">
+       <rect>
+        <x>440</x>
+        <y>40</y>
+        <width>292</width>
+        <height>37</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <kerning>true</kerning>
+       </font>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#000000;&quot;&gt;Grey Water&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="BlackWaterLabel">
+      <property name="geometry">
+       <rect>
+        <x>440</x>
+        <y>228</y>
+        <width>293</width>
+        <height>36</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <kerning>true</kerning>
+       </font>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#000000;&quot;&gt;Black Water&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="BatteryLabel">
+      <property name="geometry">
+       <rect>
+        <x>60</x>
+        <y>228</y>
+        <width>292</width>
+        <height>36</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <kerning>true</kerning>
+       </font>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#000000;&quot;&gt;Battery&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="FreshWaterLabel">
+      <property name="geometry">
+       <rect>
+        <x>60</x>
+        <y>37</y>
+        <width>293</width>
+        <height>37</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <kerning>true</kerning>
+       </font>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#000000;&quot;&gt;Fresh Water&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
      <widget class="QProgressBar" name="FreshWaterProgressBar">
       <property name="geometry">
        <rect>
-        <x>70</x>
-        <y>150</y>
-        <width>270</width>
-        <height>70</height>
+        <x>60</x>
+        <y>80</y>
+        <width>300</width>
+        <height>80</height>
        </rect>
       </property>
       <property name="minimumSize">
@@ -123,13 +205,32 @@
        <number>24</number>
       </property>
      </widget>
+     <widget class="QProgressBar" name="BatteryProgressBar">
+      <property name="geometry">
+       <rect>
+        <x>60</x>
+        <y>270</y>
+        <width>300</width>
+        <height>80</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>270</width>
+        <height>70</height>
+       </size>
+      </property>
+      <property name="value">
+       <number>24</number>
+      </property>
+     </widget>
      <widget class="QProgressBar" name="BlackWaterProgressBar">
       <property name="geometry">
        <rect>
-        <x>70</x>
-        <y>300</y>
-        <width>270</width>
-        <height>70</height>
+        <x>440</x>
+        <y>270</y>
+        <width>300</width>
+        <height>80</height>
        </rect>
       </property>
       <property name="minimumSize">
@@ -145,10 +246,10 @@
      <widget class="QProgressBar" name="GreyWaterProgressBar">
       <property name="geometry">
        <rect>
-        <x>380</x>
-        <y>150</y>
-        <width>270</width>
-        <height>70</height>
+        <x>440</x>
+        <y>83</y>
+        <width>300</width>
+        <height>80</height>
        </rect>
       </property>
       <property name="minimumSize">
@@ -161,172 +262,24 @@
        <number>24</number>
       </property>
      </widget>
-     <widget class="QProgressBar" name="BatteryProgressBar">
-      <property name="geometry">
-       <rect>
-        <x>380</x>
-        <y>300</y>
-        <width>270</width>
-        <height>70</height>
-       </rect>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>270</width>
-        <height>70</height>
-       </size>
-      </property>
-      <property name="value">
-       <number>24</number>
-      </property>
-     </widget>
-     <widget class="QLabel" name="BlackWaterLabel">
-      <property name="geometry">
-       <rect>
-        <x>70</x>
-        <y>270</y>
-        <width>121</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>12</pointsize>
-        <kerning>true</kerning>
-       </font>
-      </property>
-      <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ffffff;&quot;&gt;Black Water&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="FreshWaterLabel">
-      <property name="geometry">
-       <rect>
-        <x>70</x>
-        <y>120</y>
-        <width>121</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>12</pointsize>
-        <kerning>true</kerning>
-       </font>
-      </property>
-      <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ffffff;&quot;&gt;Fresh Water&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="GreyWaterLabel">
-      <property name="geometry">
-       <rect>
-        <x>380</x>
-        <y>120</y>
-        <width>121</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>12</pointsize>
-        <kerning>true</kerning>
-       </font>
-      </property>
-      <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ffffff;&quot;&gt;Grey Water&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="BatteryLabel">
-      <property name="geometry">
-       <rect>
-        <x>380</x>
-        <y>270</y>
-        <width>121</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>12</pointsize>
-        <kerning>true</kerning>
-       </font>
-      </property>
-      <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ffffff;&quot;&gt;Battery&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="StatusBackground">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>10</y>
-        <width>720</width>
-        <height>480</height>
-       </rect>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>720</width>
-        <height>480</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>1250</width>
-        <height>850</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/newPrefix/background.jpg&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-     </widget>
-     <zorder>StatusBackground</zorder>
-     <zorder>FreshWaterProgressBar</zorder>
-     <zorder>BlackWaterProgressBar</zorder>
-     <zorder>GreyWaterProgressBar</zorder>
-     <zorder>BatteryProgressBar</zorder>
-     <zorder>BlackWaterLabel</zorder>
-     <zorder>FreshWaterLabel</zorder>
-     <zorder>GreyWaterLabel</zorder>
-     <zorder>BatteryLabel</zorder>
     </widget>
     <widget class="QWidget" name="UsageHistory">
      <attribute name="title">
       <string>UsageHistory</string>
      </attribute>
      <attribute name="toolTip">
-      <string>Click to see the history of the devices usage through graphs</string>
+      <string>Click to see a graph of the sensor usage.</string>
      </attribute>
      <attribute name="whatsThis">
-      <string>Shows the history of the device's usage through graphs</string>
+      <string>Shows a graph of the sensor usage.</string>
      </attribute>
-     <widget class="QLabel" name="HistoryBackground">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>-20</y>
-        <width>720</width>
-        <height>480</height>
-       </rect>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>720</width>
-        <height>480</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/newPrefix/background.jpg&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-     </widget>
      <widget class="QPushButton" name="CheckGraphs">
       <property name="geometry">
        <rect>
-        <x>310</x>
-        <y>390</y>
-        <width>87</width>
-        <height>29</height>
+        <x>650</x>
+        <y>140</y>
+        <width>131</width>
+        <height>131</height>
        </rect>
       </property>
       <property name="text">
@@ -338,8 +291,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>711</width>
-        <height>379</height>
+        <width>629</width>
+        <height>429</height>
        </rect>
       </property>
      </widget>
@@ -348,30 +301,17 @@
      <attribute name="title">
       <string>Power</string>
      </attribute>
-     <widget class="QLabel" name="PowerBackground">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>720</width>
-        <height>480</height>
-       </rect>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>720</width>
-        <height>480</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/newPrefix/background.jpg&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-     </widget>
+     <attribute name="toolTip">
+      <string>Click to access power buttons.</string>
+     </attribute>
+     <attribute name="whatsThis">
+      <string>Power has the power button for the application and Raspberry Pi.</string>
+     </attribute>
      <widget class="QPushButton" name="powerApp">
       <property name="geometry">
        <rect>
-        <x>100</x>
-        <y>120</y>
+        <x>140</x>
+        <y>100</y>
         <width>195</width>
         <height>205</height>
        </rect>
@@ -407,8 +347,8 @@
      <widget class="QPushButton" name="powerRasberry">
       <property name="geometry">
        <rect>
-        <x>420</x>
-        <y>120</y>
+        <x>510</x>
+        <y>100</y>
         <width>195</width>
         <height>205</height>
        </rect>
@@ -444,28 +384,19 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>0</y>
-      <width>720</width>
+      <y>6</y>
+      <width>900</width>
       <height>480</height>
      </rect>
     </property>
-    <property name="minimumSize">
+    <property name="maximumSize">
      <size>
-      <width>720</width>
+      <width>900</width>
       <height>480</height>
      </size>
     </property>
-    <property name="maximumSize">
-     <size>
-      <width>1250</width>
-      <height>850</height>
-     </size>
-    </property>
-    <property name="lineWidth">
-     <number>0</number>
-    </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/newPrefix/background.jpg&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>TextLabel</string>
     </property>
    </widget>
    <zorder>label</zorder>
@@ -482,7 +413,6 @@
  </customwidgets>
  <tabstops>
   <tabstop>powerApp</tabstop>
-  <tabstop>TabWidget</tabstop>
   <tabstop>powerRasberry</tabstop>
   <tabstop>CheckGraphs</tabstop>
  </tabstops>
