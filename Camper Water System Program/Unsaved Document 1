@@ -11,3 +11,7 @@ pip install --user --upgrade matplotlib==2.2.3
 
 
 n the window that opens, write QChartView for the Promoted class name:, and PyQt5.QtChart for the Header file:. Press Add. It will be added to the list of Promoted Classes. Select it from the list, and press Promote. That's it.
+
+
+
+http://greatforest.com/wp-content/uploads/2016/03/icon_2133.png

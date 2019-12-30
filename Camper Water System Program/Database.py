@@ -1,3 +1,4 @@
+#   Database.py
 #-----------------------------imports-------------------------------------------
 import mysql.connector
 from mysql.connector import Error
@@ -9,9 +10,9 @@ from datetime import datetime
 #        database.
 #    Parameters:
 #        int freshWater - fresh water percent value
-#        int freshWater - fresh water percent value
-#        int freshWater - fresh water percent value
-#        int freshWater - fresh water percent value
+#        int greyWater - grey water percent value
+#        int blackWater - black water percent value
+#        int battery - battery percent value
 #    Return:
 #        Not Applicable
 def input(freshWater, greyWater, blackWater, battery):
@@ -24,7 +25,7 @@ def input(freshWater, greyWater, blackWater, battery):
         myConnection = mysql.connector.connect(
         host='localhost',    
          user='root',         
-         passwd='raspberry',  
+         passwd='5733AdR',  
          db='CamperWaterDB') 
 
         #creates cursor
@@ -57,9 +58,9 @@ def input(freshWater, greyWater, blackWater, battery):
 #        indicates the percentage in the tanks.
 #    Parameters:
 #        int freshWater - fresh water percent value
-#        int freshWater - fresh water percent value
-#        int freshWater - fresh water percent value
-#        int freshWater - fresh water percent value
+#        int greyWater - grey water percent value
+#        int blackWater - black water percent value
+#        int battery - battery percent value
 #    Return:
 #       int usageIdArr - an array of the id for tuple
 #       datetime dateTimeArr - array of dateTimeArr
@@ -81,7 +82,7 @@ def sensorData():
         myConnection = mysql.connector.connect(
             host='localhost',    
             user='root',         
-            passwd='raspberry',  
+            passwd='5733AdR',  
             db='CamperWaterDB') 
 
         #what will be queried in the database
@@ -117,7 +118,6 @@ def sensorData():
         #closing database connection.
         if(myConnection.is_connected()):
             myConnection.close()
-            print("connection is closed")
 
     #returns the reverse of all arrays for graphing
     return usageIdArr[::-1], dateTimeArr[::-1], freshWaterArr[::-1], \
@@ -126,5 +126,46 @@ def sensorData():
 
 
 #-------------------------------------------------------------------------------
-def lastInput (freshWaterVa,  greyWaterVal,  blackWaterVal,  batteryVal):
-    return freshWaterVa,  greyWaterVal,  blackWaterVal,  batteryVal
+def lastInput ():
+    freshWaterVal = 0
+    greyWaterVal = 0
+    blackWaterVal = 0
+    batteryVal = 0
+
+    #try to connect to database
+    try:
+        myConnection = mysql.connector.connect(
+            host='localhost',    
+            user='root',         
+            passwd='5733AdR',  
+            db='CamperWaterDB') 
+
+        #what will be queried in the database
+        query = "select * from CamperWaterDB.usageData ORDER BY " + \
+            "usageDataID DESC"
+        #buffered=True to avoid MySQL Unread result error
+        cursor = myConnection.cursor(buffered=True) 
+        cursor.execute(query)       #execute query
+        fetching_size = 1         #number of tuple back
+        #array of getched records
+        records = cursor.fetchmany(fetching_size)
+        
+        for row in records:
+            freshWaterVal = row[2]
+            greyWaterVal = row[3]
+            blackWaterVal = row[4]
+            batteryVal = row[5]
+        cursor.close()
+    
+    #connection failed
+    except Error as e :
+        print ("Error while connecting to MySQL", e)
+
+    #Closes the database
+    finally:
+        #closing database connection.
+        if(myConnection.is_connected()):
+            myConnection.close()
+
+    #returns the reverse of all arrays for graphing
+    return freshWaterVal,  greyWaterVal,  blackWaterVal,  batteryVal

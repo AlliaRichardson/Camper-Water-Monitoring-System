@@ -17,7 +17,11 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Camper Sensor System</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>:/capstoneImages/icon.jpg</normaloff>:/capstoneImages/icon.jpg</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true"/>
@@ -44,7 +48,7 @@
       <x>0</x>
       <y>0</y>
       <width>800</width>
-      <height>470</height>
+      <height>480</height>
      </rect>
     </property>
     <property name="minimumSize">
@@ -80,7 +84,7 @@
      <enum>QTabWidget::North</enum>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <property name="usesScrollButtons">
      <bool>true</bool>
@@ -262,6 +266,34 @@
        <number>24</number>
       </property>
      </widget>
+     <widget class="QLabel" name="SensorInfoBackground">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>-35</y>
+        <width>800</width>
+        <height>480</height>
+       </rect>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>800</width>
+        <height>480</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/icons/background1.jpg&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <zorder>SensorInfoBackground</zorder>
+     <zorder>GreyWaterLabel</zorder>
+     <zorder>BlackWaterLabel</zorder>
+     <zorder>BatteryLabel</zorder>
+     <zorder>FreshWaterLabel</zorder>
+     <zorder>FreshWaterProgressBar</zorder>
+     <zorder>BatteryProgressBar</zorder>
+     <zorder>BlackWaterProgressBar</zorder>
+     <zorder>GreyWaterProgressBar</zorder>
     </widget>
     <widget class="QWidget" name="UsageHistory">
      <attribute name="title">
@@ -278,12 +310,30 @@
        <rect>
         <x>650</x>
         <y>140</y>
-        <width>131</width>
-        <height>131</height>
+        <width>130</width>
+        <height>130</height>
        </rect>
       </property>
+      <property name="maximumSize">
+       <size>
+        <width>130</width>
+        <height>130</height>
+       </size>
+      </property>
+      <property name="statusTip">
+       <string>Click to reset the graph.</string>
+      </property>
+      <property name="whatsThis">
+       <string>Refreshes the graph when clicked.</string>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-image: url(:/images/icons/RefreshBttnImg.jpg);</string>
+      </property>
       <property name="text">
-       <string>Refresh</string>
+       <string/>
       </property>
      </widget>
      <widget class="MplWidget" name="SensorGraph" native="true">
@@ -296,6 +346,28 @@
        </rect>
       </property>
      </widget>
+     <widget class="QLabel" name="UsageBackground">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>-40</y>
+        <width>800</width>
+        <height>480</height>
+       </rect>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>800</width>
+        <height>480</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/icons/background1.jpg&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <zorder>UsageBackground</zorder>
+     <zorder>CheckGraphs</zorder>
+     <zorder>SensorGraph</zorder>
     </widget>
     <widget class="QWidget" name="Power">
      <attribute name="title">
@@ -310,22 +382,22 @@
      <widget class="QPushButton" name="powerApp">
       <property name="geometry">
        <rect>
-        <x>140</x>
+        <x>120</x>
         <y>100</y>
-        <width>195</width>
-        <height>205</height>
+        <width>200</width>
+        <height>200</height>
        </rect>
       </property>
       <property name="minimumSize">
        <size>
-        <width>140</width>
-        <height>140</height>
+        <width>200</width>
+        <height>200</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>195</width>
-        <height>205</height>
+        <width>200</width>
+        <height>200</height>
        </size>
       </property>
       <property name="statusTip">
@@ -338,7 +410,7 @@
        <bool>false</bool>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-image: url(:/newPrefix/powerApp.png);</string>
+       <string notr="true">background-image: url(:/images/icons/AppPwrBttnImg.jpg);</string>
       </property>
       <property name="text">
        <string/>
@@ -347,23 +419,26 @@
      <widget class="QPushButton" name="powerRasberry">
       <property name="geometry">
        <rect>
-        <x>510</x>
+        <x>480</x>
         <y>100</y>
-        <width>195</width>
-        <height>205</height>
+        <width>200</width>
+        <height>200</height>
        </rect>
       </property>
       <property name="minimumSize">
        <size>
-        <width>195</width>
+        <width>200</width>
         <height>200</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>300</width>
-        <height>300</height>
+        <width>200</width>
+        <height>200</height>
        </size>
+      </property>
+      <property name="acceptDrops">
+       <bool>false</bool>
       </property>
       <property name="statusTip">
        <string>Click to turn off the Raspberry Pi</string>
@@ -372,12 +447,34 @@
        <string>Turns off the Raspberry Pi</string>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-image: url(:/newPrefix/raspberrypi.png);</string>
+       <string notr="true">background-image: url(:/images/icons/RaspPiPwrBttnImg.jpg);</string>
       </property>
       <property name="text">
-       <string>Turn off Pi</string>
+       <string/>
       </property>
      </widget>
+     <widget class="QLabel" name="SensorInfoBackground_2">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>-30</y>
+        <width>800</width>
+        <height>480</height>
+       </rect>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>800</width>
+        <height>480</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/icons/background1.jpg&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <zorder>SensorInfoBackground_2</zorder>
+     <zorder>powerApp</zorder>
+     <zorder>powerRasberry</zorder>
     </widget>
    </widget>
    <widget class="QLabel" name="label">
@@ -399,6 +496,26 @@
      <string>TextLabel</string>
     </property>
    </widget>
+   <widget class="QLabel" name="MainBackground">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>800</width>
+      <height>480</height>
+     </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>800</width>
+      <height>480</height>
+     </size>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/icons/background1.jpg&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <zorder>MainBackground</zorder>
    <zorder>label</zorder>
    <zorder>TabWidget</zorder>
   </widget>
@@ -417,7 +534,7 @@
   <tabstop>CheckGraphs</tabstop>
  </tabstops>
  <resources>
-  <include location="../new.qrc"/>
+  <include location="../image.qrc"/>
  </resources>
  <connections/>
 </ui>

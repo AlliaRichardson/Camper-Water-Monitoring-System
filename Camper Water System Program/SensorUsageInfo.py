@@ -1,7 +1,8 @@
+#   SensorUsageInfo.py
 #-----------------------------imports-------------------------------------------
 import piplates.DAQCplate as DAQC
 #-------------------------------------------------------------------------------
-#   Method getWaterUsage
+#   Method getPercentage
 #    Description:
 #        Determines what percent of the sensor that was used, which
 #        indicates the percentage in the tanks.
@@ -11,59 +12,29 @@ import piplates.DAQCplate as DAQC
 #        int channel - the daqc channel the sensor is on
 #    Return:
 #        int checkValue - returns the percentage of the voltage
-def getWaterUsage(empty, full, channel):
-    voltageInput = 0     #initialize sensorInput
-    percent = 200      #initialize percUsed
+def getPercentage(empty, full, channel, typeSensor):
+	voltageInput = 0     #initialize sensorInput
+	percent = 200      #initialize percUsed
 
     #while input is zero - zero means it didn't get a reading
-    while voltageInput == 0:
+	while voltageInput == 0:
         #try to get a reading
-        try:
+		try:
             #gets the voltage inut from the daqc board
-            voltageInput = DAQC.getADC(0, channel)
+			voltageInput = DAQC.getADC(0, channel)
             #if the voltage is greater than 0 it got a reading.
-            if voltageInput > 0:
+			if voltageInput > 0:
                 #calculates the percentage
-                percent = round(((empty + voltageInput)/(empty+full))*100)
-            time.sleep(2)
+                if typeSensor == 'W':
+				    percent = round(((empty - voltageInput)/(empty-full))*100)
+                elif typeSensor == 'B':
+                    percent = round((sensorInput/5)*100)
+			time.sleep(1)
         #If not voltage was read or it errored
-        except:
-            print("")
+		except:
+			print("")
     #checkValue of the percentage bounds and than return it
-    return checkValue(percent)
-
-#-------------------------------------------------------------------------------
-#   Method - getBattery()
-#    Description:
-#        Determines what percent of the sensor that was used, which
-#        indicates the percentage in the tanks.
-#    Parameters:
-#        Not applicable
-#    Return:
-#        int checkValue - returns the percentage of the voltage
-def getBattery():
-    voltageInput = 0     #initialize sensorInput
-    percent = 200      #initialize percent
-
-    #while input is zero - zero means it didn't get a reading
-    while voltageInput == 0:
-        #try to get a reading
-        try:
-            #gets the voltage inut from the daqc board
-            sensorInput = DAQC.getADC(0, 7)
-            #print (sensorInput)
-            #gets the voltage inut from the daqc board
-            if sensorInput > 0:
-                #calculates the percentage
-                percent = round((sensorInput/5)*100)
-                #print(percent)
-            time.sleep(2)
-        #If not voltage was read or it errored
-        except:
-            print("")
-            exit()
-    #checkValue of the percentage bounds and than return it
-    return checkValue(percent)
+	return checkValue(percent)
 
 #-------------------------------------------------------------------------------
 #   Method - checkValue()
