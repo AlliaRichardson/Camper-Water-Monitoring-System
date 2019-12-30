@@ -1,35 +1,38 @@
 # -*- coding: utf-8 -*-
 
-import FreshWaterInfo
-import GreyWaterInfo
-import BlackWaterInfo
+import WaterUsageInfo
 #import BatteryInfo
 import Database
+import sys
 import time
 import randomNum
+import datetime
+from subprocess import call
+
 from PyQt5 import QtCore,  QtGui
 from PyQt5.QtCore import pyqtSlot
-from PyQt5.QtWidgets import QMainWindow
+from PyQt5.QtWidgets import QMainWindow, QMessageBox
+from matplotlib.backends.backend_qt5agg import (NavigationToolbar2QT as NavigationToolbar)
+import numpy as np
+import random
 from .Ui_mainWindow import Ui_MainWindow
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     #Constructor for the MainWindow Class
     def __init__(self, parent=None):
         super(MainWindow, self).__init__(parent)
+
         self.setupUi(self)
         #Creates an object of threadclass
         self.threadclass = ThreadClass()
         #starts a thread
         self.threadclass.start()
-        #Connects to an emitter in the thread class so it can set the fresh water progress bar's value
+        #Connects to the emitters in the thread class so it can set the sensor's progressbar value
         self.threadclass.freshWaterSig.connect(self.on_FreshWaterProgressBar_valueChanged)
-        #Connects to an emitter in the thread class so it can set the grey water  progress bar's value
         self.threadclass.greyWaterSig.connect(self.on_GreyWaterProgressBar_valueChanged)
-       #Connects to an emitter in the thread class so it can set the black water  progress bar's value
         self.threadclass.blackWaterSig.connect(self.on_BlackWaterProgressBar_valueChanged)
-       #Connects to an emitter in the thread class so it can set the battery  progress bar's value
         self.threadclass.batterySig.connect(self.on_BatteryProgressBar_valueChanged)
-        
+       
     
     @pyqtSlot(int)
     def on_FreshWaterProgressBar_valueChanged(self, value):
@@ -147,14 +150,71 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             #Sets the palette
             self.BatteryProgressBar.setPalette(palette)        
 
+    def update_graph(self):
+        usageIdArr,  dateTimeArr, freshWaterArr,  greyWaterArr,  blackWaterArr,  batteryArr = Database.sensorData()
+        #Clears the graphs
+        self.SensorGraph.canvas.axes.clear()        
+        #freshWaterArr, greyWaterArr, blackWaterArr, batteryArr, time = sensorData()
+        self.SensorGraph.canvas.axes.set_ylim(0, 100)
+        #Plots the graphs
+        self.SensorGraph.canvas.axes.plot(dateTimeArr,freshWaterArr)      #(time, freshWaterArr)  #FreshWater
+        self.SensorGraph.canvas.axes.plot(dateTimeArr, greyWaterArr)          #(time, greyWaterArr)    #greyWater
+        self.SensorGraph.canvas.axes.plot(dateTimeArr,  blackWaterArr)        #(time, blackWaterArr)     #blackWater
+        self.SensorGraph.canvas.axes.plot(dateTimeArr, batteryArr)    #(time, batteryArr)    #battery
+        #creates the legend
+        self.SensorGraph.canvas.axes.legend(('FreshWater', 'GreyWater',  'BlackWater',  'Battery'), loc='right')
+        #Angles the x-axis
+        self.SensorGraph.canvas.axes.xaxis.set_tick_params(rotation=45)
+        #Titles of the graphs
+        self.SensorGraph.canvas.axes.set_title('Sensors')
+        self.SensorGraph.canvas.axes.set_xlabel('Date')
+        self.SensorGraph.canvas.axes.set_ylabel('Percentage')
+        #Draws the graphs
+        self.SensorGraph.canvas.draw()
+        
+    @pyqtSlot()
+    def on_CheckGraphs_clicked(self):
+       self.update_graph()
+    
+    @pyqtSlot()
+    def on_powerApp_clicked(self):
+        choice = QMessageBox.question(self,  'Close',  "Do you want to exit the application?",  QMessageBox.No | QMessageBox.Yes)
+        if choice == QMessageBox.Yes:
+            sys.exit()
+        else:
+            pass
+
+    @pyqtSlot()
+    def on_powerApp_pressed(self):
+        choice = QMessageBox.question(self,  'Close',  "Do you want to exit the application?",  QMessageBox.No | QMessageBox.Yes)
+        if choice == QMessageBox.Yes:
+            sys.exit()
+        else:
+            pass
+            
+    @pyqtSlot()
+    def on_powerRasberry_clicked(self):
+        choice = QMessageBox.question(self,  'Close',  "Do you want to turn off the Raspberry Pi?",  QMessageBox.No | QMessageBox.Yes)
+        if choice == QMessageBox.Yes:
+            call("sudo shutdown -h now", shell=True)
+        else:
+            pass
+
+    
+    @pyqtSlot()
+    def on_powerRasberry_pressed(self):
+        choice = QMessageBox.question(self,  'Close',  "Do you want to turn off the Raspberry Pi?",  QMessageBox.No | QMessageBox.Yes)
+        if choice == QMessageBox.Yes:
+            call("sudo shutdown -h now", shell=True)
+        else:
+            pass
+
+        
 class ThreadClass(QtCore.QThread):
-    # Create the signal for the fresh water thread
+    # Create the signals for sensors
     freshWaterSig = QtCore.pyqtSignal(int)
-    # Create the signal for the grey water thread
     greyWaterSig = QtCore.pyqtSignal(int)
-    # Create the signal for the black water thread
     blackWaterSig = QtCore.pyqtSignal(int)
-    #Create the signal for the battery thread
     batterySig = QtCore.pyqtSignal(int)
 
     #Constructor for the ThreadClass
@@ -164,28 +224,25 @@ class ThreadClass(QtCore.QThread):
     def run(self):
         counterDatabaseInput = 0
         while True:
-            #gets the CPU value from the file sysinfo.py
-            freshWaterVal = FreshWaterInfo.getFreshWater()
-            #gets a random number from randomNum.py
-            greyWaterVal = GreyWaterInfo.getGreyWater()
-            #gets the CPU value from the file sysinfo.py
-            blackWaterVal = BlackWaterInfo.getBlackWater()
-            #gets a random number from randomNum.py
+            #gets Values for sensors
+            freshWaterVal =  WaterUsageInfo.getWaterUsage(3.5, 1.9, 0)
+            greyWaterVal = WaterUsageInfo.getWaterUsage(3.8, 2.2, 1)
+            blackWaterVal = WaterUsageInfo.getWaterUsage(3.7, 1.9, 2)
             batteryVal =  randomNum.getRandNum() #BatteryInfo.getBattery()
-            # Emits the signal of the fresh wter value
+            #freshWaterVal,  greyWaterVal,  blackWaterVal,  batteryVal = Database.lastInput(freshWaterVal,  greyWaterVal,  blackWaterVal,  batteryVal)
+            # Emits the signal 
             self.freshWaterSig.emit(freshWaterVal)
-            # Emits the signal of the grey water value
             self.greyWaterSig.emit(greyWaterVal)
-            # Emits the signal of the black water value
             self.blackWaterSig.emit(blackWaterVal)
-            # Emits the signal of the battery value
             self.batterySig.emit(batteryVal)
-            
-            counterDatabaseInput = counterDatabaseInput + 1
+            #Inputs the values into the data base.
             print(counterDatabaseInput)
-            if (counterDatabaseInput % 10) == 0:
+            if (counterDatabaseInput % 1) == 0: #records ever 10 run cycles
                 Database.input(freshWaterVal,  greyWaterVal,  blackWaterVal,  batteryVal)
-            time.sleep (2)
+            #increments counter
+            counterDatabaseInput = counterDatabaseInput + 1
+            #sleeps for 2 seconds
+            time.sleep (1)
                 
  
     #Flushes the toilet

@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="newPrefix">
     <file>background.jpg</file>
+    <file>raspberrypi.png</file>
+    <file>powerApp.png</file>
   </qresource>
 </RCC>

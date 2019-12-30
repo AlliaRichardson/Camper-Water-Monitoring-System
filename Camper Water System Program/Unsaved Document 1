@@ -1,0 +1,13 @@
+sudo dpkg --configure -a
+
+
+
+Add
+pip install --user --upgrade pip
+pip install pyqtchart --user
+pip install matplotlib --user
+pip install --user --upgrade matplotlib==2.2.3
+
+
+
+n the window that opens, write QChartView for the Promoted class name:, and PyQt5.QtChart for the Header file:. Press Add. It will be added to the list of Promoted Classes. Select it from the list, and press Promote. That's it.
