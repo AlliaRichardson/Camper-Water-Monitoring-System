@@ -152,7 +152,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         #Sets the value that will will be shown in the progress bar
         self.BatteryProgressBar.setProperty("value", value)
         #If the value is greater than or equal to 80% the progress bar is green
-        if value >= 80:
+        if value >= 50:
             palette = QtGui.QPalette(self.palette())
             palette.setColor(QtGui.QPalette.Highlight, 
                 QtGui.QColor(QtCore.Qt.green))
@@ -326,11 +326,10 @@ class ThreadClass(QtCore.QThread):
         #while true, obtain the values, store the values, and emit the values
         while True:
             #gets Values for sensors
-            freshWaterVal = SensorUsageInfo.getSensorPercentage(3.5, 1.9, 0, 'W')
             greyWaterVal = SensorUsageInfo.getSensorPercentage(3.8, 2.2, 1, 'W')
             blackWaterVal = SensorUsageInfo.getSensorPercentage(3.7, 1.9, 2, 'W')
             batteryVal = SensorUsageInfo.getSensorPercentage(0, 5, 7, 'B')
-
+            freshWaterVal = SensorUsageInfo.getSensorPercentage(3.5, 1.9, 0, 'W')
             alarmVal = Alarm.alarmActivation(freshWaterVal,  greyWaterVal,  
                 blackWaterVal,  batteryVal)
                 
@@ -352,12 +351,7 @@ class ThreadClass(QtCore.QThread):
             counterDatabaseInput = counterDatabaseInput + 1
             #sleeps for 2 seconds
             time.sleep (1)
-    def checkValueBounds(percent):
-        if percent > 100:
-            percent = 100
-        if percent < 0:
-            percent = 0
-        return percent
+                
 #------------------------------------------------------------------------------- 
     #Flushes everything but the kitchen sink
     def flush(self):

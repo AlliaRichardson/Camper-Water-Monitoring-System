@@ -71,7 +71,7 @@ def toString( freshWtrVal,  greyWtrVal,  blackWtrVal,  batteryVal ):
        greyWtrStr= "The grey water tank is high at " + \
         str(greyWtrVal) + "%.\n"
     if blackWtrVal >=80:
-        blackWtrStr = "The black water tank is high at " + \
+        blackWtrStr = "The shitter's full at " + \
         str(blackWtrVal) + "%.\n"
     if batteryVal <=60:
         batteryStr = "Battery is running low at " \
