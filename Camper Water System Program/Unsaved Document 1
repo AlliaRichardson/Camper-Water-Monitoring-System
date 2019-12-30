@@ -10,8 +10,40 @@ pip install --user --upgrade matplotlib==2.2.3
 
 
 
-n the window that opens, write QChartView for the Promoted class name:, and PyQt5.QtChart for the Header file:. Press Add. It will be added to the list of Promoted Classes. Select it from the list, and press Promote. That's it.
+In the window that opens, write QChartView for the Promoted class name:, 
+and PyQt5.QtChart for the Header file:. Press Add. It will be added to the list 
+of Promoted Classes. Select it from the list, and press Promote. That's it.
 
 
 
 http://greatforest.com/wp-content/uploads/2016/03/icon_2133.png
+
+-------------------------------------------------------------------------------
+how to create a desktop top Icon
+
+sudo apt-get install python3-dev
+pip install pyinstaller --user
+pyinstaller main.py
+
+.exe file is located in dist/main
+rename CamperSystem
+
+create a file called CamperSystem.desktop
+put this code into it
+
+[Desktop Entry]
+Encoding=UTF-8
+Version=1.0
+Type=Application
+Terminal=false
+Exec=/home/eeddey/Desktop/Capstone/dist/main/CamperSystem
+Name=CamperSystem
+Icon=/home/eeddey/Desktop/Capstone/icons/faucet.png
+
+------
+save to desktop
+right click on CamperSystem.desktop
+go to properties
+go to permissions tab
+check "Allow executing file as program"
+

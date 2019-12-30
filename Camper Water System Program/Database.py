@@ -25,7 +25,7 @@ def input(freshWater, greyWater, blackWater, battery):
         myConnection = mysql.connector.connect(
         host='localhost',    
          user='root',         
-         passwd='5733AdR',  
+         passwd='raspberry',  
          db='CamperWaterDB') 
 
         #creates cursor
@@ -52,7 +52,7 @@ def input(freshWater, greyWater, blackWater, battery):
 
 
 #-------------------------------------------------------------------------------
-#   Method getWaterUsage
+#   Method getGraphData
 #    Description:
 #        Determines what percent of the sensor that was used, which
 #        indicates the percentage in the tanks.
@@ -68,7 +68,7 @@ def input(freshWater, greyWater, blackWater, battery):
 #       int greyWaterArr - an array of grey water data
 #       int blackWaterArr - an array of black water data
 #       int batteryArr - an array of battery data
-def sensorData():
+def getGraphData():
     #Initialize variables as empty arrays
     usageIdArr = []
     dateTimeArr = []
@@ -82,7 +82,7 @@ def sensorData():
         myConnection = mysql.connector.connect(
             host='localhost',    
             user='root',         
-            passwd='5733AdR',  
+            passwd='raspberry',  
             db='CamperWaterDB') 
 
         #what will be queried in the database
@@ -126,6 +126,16 @@ def sensorData():
 
 
 #-------------------------------------------------------------------------------
+#   Method lastInput
+#    Description:
+#        Gets the last tuple that was inputed into the database.
+#    Parameters:
+#        Not Applicable
+#    Return:
+#       int freshWaterVal - the value of the last fresh water reading
+#       int greyWaterVal - the value of the last grey water reading
+#       int blackWaterVal - the value of the last black water reading
+#       int batteryVal - the value of the last battery reading
 def lastInput ():
     freshWaterVal = 0
     greyWaterVal = 0
@@ -137,7 +147,7 @@ def lastInput ():
         myConnection = mysql.connector.connect(
             host='localhost',    
             user='root',         
-            passwd='5733AdR',  
+            passwd='raspberry',  
             db='CamperWaterDB') 
 
         #what will be queried in the database

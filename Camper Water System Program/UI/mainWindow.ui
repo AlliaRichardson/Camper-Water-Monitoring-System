@@ -21,7 +21,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>:/capstoneImages/icon.jpg</normaloff>:/capstoneImages/icon.jpg</iconset>
+    <normaloff>:/images/icons/FaucetMenuIcon.png</normaloff>:/images/icons/FaucetMenuIcon.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true"/>

@@ -1,14 +1,12 @@
 #   MainWindow
 # -*- coding: utf-8 -*-
 #-----------------------------imports-------------------------------------------
-#import SensorUsageInfo
-#import BatteryInfo
+import SensorUsageInfo
 import Database
 import sys
 import time
-import randomNum
 import Alarm
-#from subprocess import call
+from subprocess import call
 #-------------------------------------------------------------------------------
 from PyQt5 import QtCore,  QtGui
 from PyQt5.QtCore import pyqtSlot
@@ -191,18 +189,21 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         alarmString = Alarm.toString(freshWtrVal,  
             greyWtrVal,  blackWtrVal,  batteryVal) 
         #if the alarm is on and the toString is not empty activate window        
+        #if Alarm.getWindowState:
+          #  SensorUsageInfo.soundTheAlarm()
         if Alarm.getAlarmState(turnOnAlarm):
+            #if the alrm string is empty don't open alarm window
             if (alarmString == ""):
                 Alarm.resetWindow() 
+            #Otherwise, open alarm window
             else:
                 choice = QMessageBox.warning(self, 'Alarm', 
                     alarmString, QMessageBox.Ok)
                 #If the window is closed alarmWindow is set to false for closed
                 if choice == QMessageBox.Ok:
-                    print("reset at okay")
                     Alarm.resetWindow()
+                #if user clicks exit button(red x in corner) reset alarm window
                 else:
-                    print("reset at exit red")
                     Alarm.resetWindow()  
     
 #-------------------------------------------------------------------------------
@@ -217,7 +218,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     #        Not applicable  
     def update_graph(self):
         usageIdArr, dateTimeArr, freshWaterArr, greyWaterArr, blackWaterArr,  \
-            batteryArr = Database.sensorData()
+            batteryArr = Database.getGraphData()
         #Clears the graphs
         self.SensorGraph.canvas.axes.clear()        
         #Sets y-axix limits 0 to 100%
@@ -292,7 +293,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             "Do you want to turn off the Raspberry Pi?",  
             QMessageBox.No | QMessageBox.Yes)
         if choice == QMessageBox.Yes:
-            print("no")#call("sudo shutdown -h now", shell=True)
+            call("sudo shutdown -h now", shell=True)
         else:
             pass
 
@@ -332,10 +333,10 @@ class ThreadClass(QtCore.QThread):
         #while true, obtain the values, store the values, and emit the values
         while True:
             #gets Values for sensors
-            freshWaterVal =  randomNum.getRandNum() #SensorUsageInfo.getPercentage(3.5, 1.9, 0)
-            greyWaterVal = randomNum.getRandNum() #SensorUsageInfo.getPercentage(3.8, 2.2, 1)
-            blackWaterVal = randomNum.getRandNum() #SensorUsageInfo.getPercentage(3.7, 1.9, 2)
-            batteryVal =  randomNum.getRandNum() #SensorUsageInfo.getPercentage(0, 5, 7)
+            freshWaterVal = SensorUsageInfo.getSensorPercentage(3.5, 1.9, 0, 'W')
+            greyWaterVal = SensorUsageInfo.getSensorPercentage(3.8, 2.2, 1, 'W')
+            blackWaterVal = SensorUsageInfo.getSensorPercentage(3.7, 1.9, 2, 'W')
+            batteryVal =  SensorUsageInfo.getSensorPercentage(0, 5, 7, 'B')
             alarmVal = Alarm.alarmActivation(freshWaterVal,  greyWaterVal,  
                 blackWaterVal,  batteryVal)
                 

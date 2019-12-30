@@ -15,7 +15,7 @@ class Ui_MainWindow(object):
         MainWindow.resize(800, 480)
         MainWindow.setMaximumSize(QtCore.QSize(800, 480))
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/capstoneImages/icon.jpg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/images/icons/FaucetMenuIcon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         MainWindow.setWindowIcon(icon)
         MainWindow.setStyleSheet("")
         self.centralWidget = QtWidgets.QWidget(MainWindow)

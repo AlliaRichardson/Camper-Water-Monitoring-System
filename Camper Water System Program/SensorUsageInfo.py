@@ -1,8 +1,9 @@
 #   SensorUsageInfo.py
 #-----------------------------imports-------------------------------------------
 import piplates.DAQCplate as DAQC
+import time
 #-------------------------------------------------------------------------------
-#   Method getPercentage
+#   Method getSensorPercentage
 #    Description:
 #        Determines what percent of the sensor that was used, which
 #        indicates the percentage in the tanks.
@@ -12,32 +13,32 @@ import piplates.DAQCplate as DAQC
 #        int channel - the daqc channel the sensor is on
 #    Return:
 #        int checkValue - returns the percentage of the voltage
-def getPercentage(empty, full, channel, typeSensor):
-	voltageInput = 0     #initialize sensorInput
-	percent = 200      #initialize percUsed
+def getSensorPercentage(empty, full, channel, typeSensor):
+    voltageInput = 0     #initialize sensorInput
+    percent = 200      #initialize percUsed
 
     #while input is zero - zero means it didn't get a reading
-	while voltageInput == 0:
+    while voltageInput == 0:
         #try to get a reading
-		try:
+        try:
             #gets the voltage inut from the daqc board
-			voltageInput = DAQC.getADC(0, channel)
+            voltageInput = DAQC.getADC(0, channel)
             #if the voltage is greater than 0 it got a reading.
-			if voltageInput > 0:
-                #calculates the percentage
+            if voltageInput > 0:
+            #calculates the percentage
                 if typeSensor == 'W':
-				    percent = round(((empty - voltageInput)/(empty-full))*100)
+                    percent = round(((empty - voltageInput)/(empty-full))*100)
                 elif typeSensor == 'B':
-                    percent = round((sensorInput/5)*100)
-			time.sleep(1)
+                    percent = round((voltageInput/5)*100)
+            #time.sleep(1)
         #If not voltage was read or it errored
-		except:
-			print("")
+        except:
+            print("")
     #checkValue of the percentage bounds and than return it
-	return checkValue(percent)
+    return checkValueBounds(percent)
 
 #-------------------------------------------------------------------------------
-#   Method - checkValue()
+#   Method - checkValueBounds()
 #    Description:
 #        Checks to make sure that the percentage that was calculated is 
 #        between 0 and 100
@@ -45,9 +46,23 @@ def getPercentage(empty, full, channel, typeSensor):
 #        Not applicable
 #    Return:
 #        int percent - returns the percentage of the sensor
-def checkValue(percent):
+def checkValueBounds(percent):
     if percent > 100:
         percent = 100
     if percent < 0:
         percent = 0
     return percent
+    
+def soundTheAlarm():
+        #while input is zero - zero means it didn't get a reading
+    while 1:
+        #try to get a reading
+        try:
+            #gets the voltage inut from the daqc board
+            if DAQC.getADC(0, 6):
+                break
+            time.sleep(1)
+        #If not voltage was read or it errored
+        except:
+            print("")
+    #checkValue of the percentage bounds and than return it

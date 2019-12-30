@@ -41,7 +41,7 @@ def getAlarmState(alarm):
     return turnOnWindow
 
 #-------------------------------------------------------------------------------
-#   Method - on_alarmWindow_turnOn
+#   Method - toString
 #
 #    Description:
 #        Gets the string for the alram message pop-up window.
@@ -82,7 +82,6 @@ def toString( freshWtrVal,  greyWtrVal,  blackWtrVal,  batteryVal ):
 
     #return list of warning strings
     return freshWtrStr + greyWtrStr + blackWtrStr + batteryStr
-
 
 #-------------------------------------------------------------------------------
 #   Method - alarmActivation
@@ -140,7 +139,6 @@ def alarmActivation(freshWtrVal,  greyWtrVal,  blackWtrVal,  batteryVal):
     #returnes change state
     return changeState
 
-
 #-------------------------------------------------------------------------------
 #   Method - resetAlarm
 #
@@ -165,7 +163,6 @@ def resetAlarm ():
     batteryState = False
     changeState = False
 
-
 #-------------------------------------------------------------------------------
 #   Method - resetWindow
 #
@@ -179,6 +176,15 @@ def resetWindow():
     global alarmWindow
     alarmWindow = False
     
+#-------------------------------------------------------------------------------
+#   Method - getWindowState
+#
+#    Description:
+#       Sends back if the alarm window is still open or closed
+#    Parameter:
+#       Not applicable 
+#    Return:
+#        boolean alarmWindow - returns true if alarm window is open   
 def getWindowState():
     global alarmWindow
     return alarmWindow
