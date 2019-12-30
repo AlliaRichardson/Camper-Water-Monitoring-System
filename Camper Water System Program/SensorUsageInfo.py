@@ -53,16 +53,19 @@ def checkValueBounds(percent):
         percent = 0
     return percent
     
-def soundTheAlarm():
-        #while input is zero - zero means it didn't get a reading
-    while 1:
-        #try to get a reading
-        try:
-            #gets the voltage inut from the daqc board
-            if DAQC.getADC(0, 6):
-                break
-            time.sleep(1)
-        #If not voltage was read or it errored
-        except:
-            print("")
-    #checkValue of the percentage bounds and than return it
+def soundTheAlarm(state):
+
+    #try to get a reading
+    try:
+        #gets the voltage inut from the daqc board
+        if state == 'c':
+            DAQC.clrDOUTbit(0, 0)
+        if state == 's':
+            DAQC.setDOUTbit(0, 0)
+        #time.sleep(10)
+    #If not voltage was read or it errored
+    except:
+        print("")
+#checkValue of the percentage bounds and than return it
+
+soundTheAlarm('c')

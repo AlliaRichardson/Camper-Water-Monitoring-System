@@ -4,7 +4,7 @@
 #       A class that determines whether or not the sensors are in the "danger 
 #   zone". A sensor is in the danger zone when the battery and/or freshWater) is
 #   low or  when grey water and/or black water tanks are almost full.
-
+import SensorUsageInfo
 #--------------------------GlobalVariables--------------------------------------
 alarmWindow = False
 freshWtrState = False
@@ -13,7 +13,6 @@ blackWtrState = False
 batteryState = False
 changeState = False
 isAlarmReset = False
-
 #-------------------------------------------------------------------------------
 #   Method - getAlarmState
 #
@@ -71,7 +70,7 @@ def toString( freshWtrVal,  greyWtrVal,  blackWtrVal,  batteryVal ):
        greyWtrStr= "The grey water tank is high at " + \
         str(greyWtrVal) + "%.\n"
     if blackWtrVal >=80:
-        blackWtrStr = "The shitter's full at " + \
+        blackWtrStr = "The black water tank is high at " + \
         str(blackWtrVal) + "%.\n"
     if batteryVal <=60:
         batteryStr = "Battery is running low at " \
@@ -176,6 +175,7 @@ def resetAlarm ():
 #        Not applicable  
 def resetWindow():
     global alarmWindow
+    SensorUsageInfo.soundTheAlarm('c')
     alarmWindow = False
     
 #-------------------------------------------------------------------------------

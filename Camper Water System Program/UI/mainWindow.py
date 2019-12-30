@@ -152,7 +152,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         #Sets the value that will will be shown in the progress bar
         self.BatteryProgressBar.setProperty("value", value)
         #If the value is greater than or equal to 80% the progress bar is green
-        if value >= 50:
+        if value >= 80:
             palette = QtGui.QPalette(self.palette())
             palette.setColor(QtGui.QPalette.Highlight, 
                 QtGui.QColor(QtCore.Qt.green))
@@ -183,7 +183,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     #    Return:
     #        Not applicable  
     def on_alarmWindow_turnOn (self,  turnOnAlarm,  freshWtrVal,  
-            greyWtrVal,  blackWtrVal,  batteryVal): 
+            greyWtrVal,  blackWtrVal,  batteryVal):
+        alarmSoundCounter = 0
         #gets Values for toString
         alarmString = Alarm.toString(freshWtrVal,  
             greyWtrVal,  blackWtrVal,  batteryVal) 
@@ -197,7 +198,18 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 Alarm.resetWindow()
             #if user clicks exit button(red x in corner) reset alarm window
             else:
-                Alarm.resetWindow()  
+                Alarm.resetWindow()
+        print(Alarm.getWindowState)            
+        if Alarm.getWindowState():
+            if alarmSoundCounter == 0:
+                SensorUsageInfo.soundTheAlarm('s')
+                alarmSoundCounter = alarmSoundCounter + 1
+            elif alarmSoundCounter % 6:         #        if alarmSoundCounter > 0:
+                alarmSoundCounter = 0
+                SensorUsageInfo.soundTheAlarm('s')                    
+            else:
+                 alarmSoundCounter = alarmSoundCounter + 1
+        
     
 #-------------------------------------------------------------------------------
     #   Method - update_graph
@@ -326,10 +338,11 @@ class ThreadClass(QtCore.QThread):
         #while true, obtain the values, store the values, and emit the values
         while True:
             #gets Values for sensors
+            freshWaterVal = SensorUsageInfo.getSensorPercentage(3.5, 1.9, 0, 'W')
             greyWaterVal = SensorUsageInfo.getSensorPercentage(3.8, 2.2, 1, 'W')
             blackWaterVal = SensorUsageInfo.getSensorPercentage(3.7, 1.9, 2, 'W')
             batteryVal = SensorUsageInfo.getSensorPercentage(0, 5, 7, 'B')
-            freshWaterVal = SensorUsageInfo.getSensorPercentage(3.5, 1.9, 0, 'W')
+
             alarmVal = Alarm.alarmActivation(freshWaterVal,  greyWaterVal,  
                 blackWaterVal,  batteryVal)
                 
@@ -344,14 +357,20 @@ class ThreadClass(QtCore.QThread):
             self.alarmSig.emit(alarmVal,  freshWaterVal,  greyWaterVal,  blackWaterVal,  
                 batteryVal)
             #Inputs the values into the data base.
-            if (counterDatabaseInput % 1) == 0: #records ever 10 run cycles
+            if (counterDatabaseInput % 15) == 0: #records ever 10 run cycles
                 Database.input(freshWaterVal,  greyWaterVal,  blackWaterVal,  
                 batteryVal)
+                counterDatabaseInput = 0
             #increments counter
             counterDatabaseInput = counterDatabaseInput + 1
             #sleeps for 2 seconds
             time.sleep (1)
-                
+    def checkValueBounds(percent):
+        if percent > 100:
+            percent = 100
+        if percent < 0:
+            percent = 0
+        return percent
 #------------------------------------------------------------------------------- 
     #Flushes everything but the kitchen sink
     def flush(self):
