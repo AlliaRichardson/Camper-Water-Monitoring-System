@@ -1,11 +1,9 @@
-#   Code by Yapa Zeka Labs
-#   https://yapayzekalabs.blogspot.com/2018/11/pyqt5-gui-qt-designer-
-#        matplotlib.html
-#
-
 from PyQt5.QtWidgets import*
+
 from matplotlib.backends.backend_qt5agg import FigureCanvas
+
 from matplotlib.figure import Figure
+
     
 class MplWidget(QWidget):
     
