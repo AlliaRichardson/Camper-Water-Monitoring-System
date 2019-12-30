@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/home/eeddey/Desktop/Capstone/UI/mainWindow.ui'
+# Form implementation generated from reading ui file 
+#'/home/eeddey/Desktop/Capstone/UI/mainWindow.ui'
 #
 # Created by: PyQt5 UI code generator 5.12.2
 #
@@ -15,7 +16,8 @@ class Ui_MainWindow(object):
         MainWindow.resize(800, 480)
         MainWindow.setMaximumSize(QtCore.QSize(800, 480))
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/images/icons/FaucetMenuIcon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/images/icons/FaucetMenuIcon.png"), 
+		QtGui.QIcon.Normal, QtGui.QIcon.Off)
         MainWindow.setWindowIcon(icon)
         MainWindow.setStyleSheet("")
         self.centralWidget = QtWidgets.QWidget(MainWindow)
@@ -111,7 +113,8 @@ class Ui_MainWindow(object):
         self.CheckGraphs.setGeometry(QtCore.QRect(650, 140, 130, 130))
         self.CheckGraphs.setMaximumSize(QtCore.QSize(130, 130))
         self.CheckGraphs.setAutoFillBackground(False)
-        self.CheckGraphs.setStyleSheet("background-image: url(:/images/icons/RefreshBttnImg.jpg);")
+        self.CheckGraphs.setStyleSheet(
+			"background-image: url(:/images/icons/RefreshBttnImg.jpg);")
         self.CheckGraphs.setText("")
         self.CheckGraphs.setObjectName("CheckGraphs")
         self.SensorGraph = MplWidget(self.Usage)
@@ -132,7 +135,8 @@ class Ui_MainWindow(object):
         self.powerApp.setMinimumSize(QtCore.QSize(200, 200))
         self.powerApp.setMaximumSize(QtCore.QSize(200, 200))
         self.powerApp.setAutoFillBackground(False)
-        self.powerApp.setStyleSheet("background-image: url(:/images/icons/AppPwrBttnImg.jpg);")
+        self.powerApp.setStyleSheet(
+			"background-image: url(:/images/icons/AppPwrBttnImg.jpg);")
         self.powerApp.setText("")
         self.powerApp.setObjectName("powerApp")
         self.powerRasberry = QtWidgets.QPushButton(self.Power)
@@ -140,13 +144,15 @@ class Ui_MainWindow(object):
         self.powerRasberry.setMinimumSize(QtCore.QSize(200, 200))
         self.powerRasberry.setMaximumSize(QtCore.QSize(200, 200))
         self.powerRasberry.setAcceptDrops(False)
-        self.powerRasberry.setStyleSheet("background-image: url(:/images/icons/RaspPiPwrBttnImg.jpg);")
+        self.powerRasberry.setStyleSheet(
+			"background-image: url(:/images/icons/RaspPiPwrBttnImg.jpg);")
         self.powerRasberry.setText("")
         self.powerRasberry.setObjectName("powerRasberry")
         self.SensorInfoBackground_2 = QtWidgets.QLabel(self.Power)
         self.SensorInfoBackground_2.setGeometry(QtCore.QRect(0, -30, 800, 480))
         self.SensorInfoBackground_2.setMaximumSize(QtCore.QSize(800, 480))
-        self.SensorInfoBackground_2.setObjectName("SensorInfoBackground_2")
+        self.SensorInfoBackground_2.setObjectName(
+			"SensorInfoBackground_2")
         self.SensorInfoBackground_2.raise_()
         self.powerApp.raise_()
         self.powerRasberry.raise_()
@@ -170,31 +176,68 @@ class Ui_MainWindow(object):
         MainWindow.setTabOrder(self.powerApp, self.powerRasberry)
         MainWindow.setTabOrder(self.powerRasberry, self.CheckGraphs)
 
+        flags = QtCore.Qt.WindowFlags(QtCore.Qt.FramelessWindowHint | 
+			QtCore.Qt.WindowStaysOnTopHint)
+        self.setWindowFlags(flags)
+
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "Camper Sensor System"))
-        self.GreyWaterLabel.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" color:#000000;\">Grey Water</span></p></body></html>"))
-        self.BlackWaterLabel.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" color:#000000;\">Black Water</span></p></body></html>"))
-        self.BatteryLabel.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" color:#000000;\">Battery</span></p></body></html>"))
-        self.FreshWaterLabel.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" color:#000000;\">Fresh Water</span></p></body></html>"))
-        self.FreshWaterProgressBar.setToolTip(_translate("MainWindow", "<html><head/><body><p>Adjust to the content of the fresh water tank</p></body></html>"))
-        self.SensorInfoBackground.setText(_translate("MainWindow", "<html><head/><body><p><img src=\":/images/icons/background1.jpg\"/></p></body></html>"))
-        self.TabWidget.setTabText(self.TabWidget.indexOf(self.Sensors), _translate("MainWindow", "Sensors"))
-        self.TabWidget.setTabToolTip(self.TabWidget.indexOf(self.Sensors), _translate("MainWindow", "Click to see status of sensors"))
-        self.CheckGraphs.setStatusTip(_translate("MainWindow", "Click to reset the graph."))
-        self.CheckGraphs.setWhatsThis(_translate("MainWindow", "Refreshes the graph when clicked."))
-        self.UsageBackground.setText(_translate("MainWindow", "<html><head/><body><p><img src=\":/images/icons/background1.jpg\"/></p></body></html>"))
-        self.TabWidget.setTabText(self.TabWidget.indexOf(self.Usage), _translate("MainWindow", "Usage"))
-        self.TabWidget.setTabToolTip(self.TabWidget.indexOf(self.Usage), _translate("MainWindow", "Click to see a graph of the sensor usage."))
-        self.powerApp.setStatusTip(_translate("MainWindow", "Click to turn off the Application"))
-        self.powerApp.setWhatsThis(_translate("MainWindow", "Turns off the application"))
-        self.powerRasberry.setStatusTip(_translate("MainWindow", "Click to turn off the Raspberry Pi"))
-        self.powerRasberry.setWhatsThis(_translate("MainWindow", "Turns off the Raspberry Pi"))
-        self.SensorInfoBackground_2.setText(_translate("MainWindow", "<html><head/><body><p><img src=\":/images/icons/background1.jpg\"/></p></body></html>"))
-        self.TabWidget.setTabText(self.TabWidget.indexOf(self.Power), _translate("MainWindow", "Power"))
-        self.TabWidget.setTabToolTip(self.TabWidget.indexOf(self.Power), _translate("MainWindow", "Click to access power buttons."))
+        MainWindow.setWindowTitle(_translate(
+			"MainWindow", "Camper Sensor System"))
+        self.GreyWaterLabel.setText(_translate(
+			"MainWindow", "<html><head/><body><p>"+
+			"<span style=\" color:#000000;\">Grey Water</span></p></body>" +
+			"</html>"))
+        self.BlackWaterLabel.setText(_translate("MainWindow", "<html><head/>" +
+			"<body><p><span style=\" color:#000000;\">Black Water</span></p>" +
+			"</body></html>"))
+        self.BatteryLabel.setText(_translate("MainWindow", "<html><head/>" + 
+			"<body><p><span style=\" color:#000000;\">Battery</span></p>" +
+			"</body></html>"))
+        self.FreshWaterLabel.setText(_translate("MainWindow", "<html><head/>" +
+			"<body><p><span style=\" color:#000000;\">Fresh Water</span></p>" +
+			"</body></html>"))
+        self.FreshWaterProgressBar.setToolTip(_translate("MainWindow", 
+			"<html><head/><body><p>Adjust to the content of the fresh water " +
+			"tank</p></body></html>"))
+        self.SensorInfoBackground.setText(_translate("MainWindow", "<html>" +
+			"<head/><body><p><img src=\":/images/icons/background1.jpg\"/></p>"+
+			"</body></html>"))
+        self.TabWidget.setTabText(self.TabWidget.indexOf(self.Sensors), 
+			_translate("MainWindow", "Sensors"))
+        self.TabWidget.setTabToolTip(self.TabWidget.indexOf(self.Sensors), 
+			_translate("MainWindow", "Click to see status of sensors"))
+        self.CheckGraphs.setStatusTip(_translate("MainWindow", 
+			"Click to reset the graph."))
+        self.CheckGraphs.setWhatsThis(_translate("MainWindow", 
+			"Refreshes the graph when clicked."))
+        self.UsageBackground.setText(_translate("MainWindow", 
+			"<html><head/><body><p>" +
+			"<img src=\":/images/icons/background1.jpg\"/></p></body></html>"))
+        self.TabWidget.setTabText(self.TabWidget.indexOf(self.Usage), 
+			_translate("MainWindow", "Usage"))
+        self.TabWidget.setTabToolTip(self.TabWidget.indexOf(self.Usage), 
+			_translate("MainWindow", 
+			"Click to see a graph of the sensor usage."))
+        self.powerApp.setStatusTip(_translate("MainWindow", 
+			"Click to turn off the Application"))
+        self.powerApp.setWhatsThis(_translate("MainWindow", 
+			"Turns off the application"))
+        self.powerRasberry.setStatusTip(_translate("MainWindow", 
+			"Click to turn off the Raspberry Pi"))
+        self.powerRasberry.setWhatsThis(_translate("MainWindow", 
+			"Turns off the Raspberry Pi"))
+        self.SensorInfoBackground_2.setText(_translate("MainWindow", 
+			"<html><head/><body><p>" +
+			"<img src=\":/images/icons/background1.jpg\"/></p></body></html>"))
+        self.TabWidget.setTabText(self.TabWidget.indexOf(self.Power), 
+			_translate("MainWindow", "Power"))
+        self.TabWidget.setTabToolTip(self.TabWidget.indexOf(self.Power), 
+			_translate("MainWindow", "Click to access power buttons."))
         self.label.setText(_translate("MainWindow", "TextLabel"))
-        self.MainBackground.setText(_translate("MainWindow", "<html><head/><body><p><img src=\":/images/icons/background1.jpg\"/></p></body></html>"))
+        self.MainBackground.setText(_translate("MainWindow", "<html><head/>" +
+			"<body><p><img src=\":/images/icons/background1.jpg\"/></p>" +
+			"</body></html>"))
 
 
 from mplwidget import MplWidget

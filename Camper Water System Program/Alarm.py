@@ -1,9 +1,10 @@
-#   Alarm.py
-#   
-#   Description
-#       A class that determines whether or not the sensors are in the "danger 
-#   zone". A sensor is in the danger zone when the battery and/or freshWater) is
-#   low or  when grey water and/or black water tanks are almost full.
+'''	Alarm.py
+   
+   Description
+       A class that determines whether or not the sensors are in the "danger 
+   zone". A sensor is in the danger zone when the battery and/or freshWater) is
+   low or  when grey water and/or black water tanks are almost full.
+'''
 import SensorUsageInfo
 #--------------------------GlobalVariables--------------------------------------
 alarmWindow = False
@@ -14,15 +15,15 @@ batteryState = False
 changeState = False
 isAlarmReset = False
 #-------------------------------------------------------------------------------
-#   Method - getAlarmState
-#
-#    Description:
-#       Determines if the alarm pop-up window is allowed.
-#    Parameter:
-#       Boolean alarm - if the alarm is on
-#    Return:
-#       Boolean turnOnWindow - if true if an alarm pop-up is allowed
 def getAlarmState(alarm):
+	'''
+    Description:
+       Determines if the alarm pop-up window is allowed.
+    Parameter:
+       Boolean alarm - if the alarm is on
+    Return:
+       Boolean turnOnWindow - if true if an alarm pop-up is allowed
+	'''
     #gets global variable
     global alarmWindow
     global changeState
@@ -41,21 +42,21 @@ def getAlarmState(alarm):
     return turnOnWindow
 
 #-------------------------------------------------------------------------------
-#   Method - toString
-#
-#    Description:
-#        Gets the string for the alram message pop-up window.
-#    Parameter:
-#        int freshWtrVal - fresh water percent value
-#        int greyWtrVal - grey water percent value
-#        int blackWtrVal - black water percent value
-#        int battery - battery percent value
-#    Return:
-#        String freshWtrStr - a String message for fresh water
-#        String greyWtrStr - a String message for grey water
-#        String blackWtrStr - a String message for black water
-#        String batteryStr  - a String message for battery
 def toString( freshWtrVal,  greyWtrVal,  blackWtrVal,  batteryVal ):
+	'''
+    Description:
+        Gets the string for the alram message pop-up window.
+    Parameter:
+        int freshWtrVal - fresh water percent value
+        int greyWtrVal - grey water percent value
+        int blackWtrVal - black water percent value
+        int battery - battery percent value
+    Return:
+        String freshWtrStr - a String message for fresh water
+        String greyWtrStr - a String message for grey water
+        String blackWtrStr - a String message for black water
+        String batteryStr  - a String message for battery
+	'''
     #initializes string variables
     freshWtrStr = ""
     greyWtrStr = ""
@@ -72,7 +73,7 @@ def toString( freshWtrVal,  greyWtrVal,  blackWtrVal,  batteryVal ):
     if blackWtrVal >=80:
         blackWtrStr = "The black water tank is high at " + \
         str(blackWtrVal) + "%.\n"
-    if batteryVal <=60:
+    if batteryVal <=45:
         batteryStr = "Battery is running low at " \
         + str(batteryVal) + "%.\n"
 
@@ -80,19 +81,19 @@ def toString( freshWtrVal,  greyWtrVal,  blackWtrVal,  batteryVal ):
     return freshWtrStr + greyWtrStr + blackWtrStr + batteryStr
 
 #-------------------------------------------------------------------------------
-#   Method - alarmActivation
-#
-#    Description:
-#       Checks if any of the sensors are low. If the sensors have not changed
-#       from their previous state they won't trigger the alarm pop-up window.
-#    Parameter:
-#        int freshWtrVal - fresh water percent value
-#        int greyWtrVal - grey water percent value
-#        int blackWtrVal - black water percent value
-#        int battery - battery percent value
-#    Return:
-#        boolean - changeState - True if another sensor was activated
 def alarmActivation(freshWtrVal,  greyWtrVal,  blackWtrVal,  batteryVal):
+	'''
+    Description:
+       Checks if any of the sensors are low. If the sensors have not changed
+       from their previous state they won't trigger the alarm pop-up window.
+    Parameter:
+        freshWtrVal : int - fresh water percent value
+        greyWtrVal : int - grey water percent value
+        blackWtrVal : int - black water percent value
+        battery : int - battery percent value
+    Return:
+        changeState : boolean - True if another sensor was activated
+	'''
     #gets global variables
     global freshWtrState
     global greyWtrState
@@ -114,7 +115,7 @@ def alarmActivation(freshWtrVal,  greyWtrVal,  blackWtrVal,  batteryVal):
         greyWtr = True
     if blackWtrVal >=80:
         blackWtr = True
-    if batteryVal <=60:
+    if batteryVal <=45:
         battery = True
     #Checks if there has been a change in sensor states
     if not(freshWtrState == freshWtr) or not(greyWtrState == greyWtr) or \
@@ -139,15 +140,15 @@ def alarmActivation(freshWtrVal,  greyWtrVal,  blackWtrVal,  batteryVal):
     return changeState
 
 #-------------------------------------------------------------------------------
-#   Method - resetAlarm
-#
-#    Description:
-#       Resets the sensor and change state if all the sensors are okay.
-#    Parameter:
-#       Not Applicable
-#    Return:
-#       Not applicable  
 def resetAlarm ():
+	'''
+    Description:
+       Resets the sensor and change state if all the sensors are okay.
+    Parameter:
+       Not Applicable
+    Return:
+       Not applicable  
+	'''
     #gets global variables
     global freshWtrState
     global greyWtrState
@@ -165,28 +166,28 @@ def resetAlarm ():
     isAlarmReset - False
 
 #-------------------------------------------------------------------------------
-#   Method - resetWindow
-#
-#    Description:
-#       Sets the alarmWindow to false, meaning the pop up window was closed.
-#    Parameter:
-#       Not applicable 
-#    Return:
-#        Not applicable  
 def resetWindow():
+	'''
+    Description:
+       Sets the alarmWindow to false, meaning the pop up window was closed.
+    Parameter:
+       Not applicable 
+    Return:
+        Not applicable  
+	'''
     global alarmWindow
     SensorUsageInfo.soundTheAlarm('c')
     alarmWindow = False
     
 #-------------------------------------------------------------------------------
-#   Method - getWindowState
-#
-#    Description:
-#       Sends back if the alarm window is still open or closed
-#    Parameter:
-#       Not applicable 
-#    Return:
-#        boolean alarmWindow - returns true if alarm window is open   
 def getWindowState():
+	'''
+	Description:
+	   Sends back if the alarm window is still open or closed
+	Parameter:
+	   Not applicable 
+	Return:
+		alarmWindow : boolean - returns true if alarm window is open  
+	''' 
     global alarmWindow
     return alarmWindow

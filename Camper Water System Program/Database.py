@@ -1,21 +1,28 @@
-#   Database.py
+'''	Database.py
+	
+	Description:
+		Stores the sensor's information into CamperWaterDB. It also returns 
+		information about the stored information in the CamperWaterDB.
+'''
 #-----------------------------imports-------------------------------------------
 import mysql.connector
 from mysql.connector import Error
 from datetime import datetime
 #-------------------------------------------------------------------------------
-#   Method input
-#    Description:
-#        Inputs fresh water, grey water, black water, and battery into the 
-#        database.
-#    Parameters:
-#        int freshWater - fresh water percent value
-#        int greyWater - grey water percent value
-#        int blackWater - black water percent value
-#        int battery - battery percent value
-#    Return:
-#        Not Applicable
 def input(freshWater, greyWater, blackWater, battery):
+	'''
+		Description:
+			Inputs fresh water, grey water, black water, and battery into the 
+			database.
+		Parameters:
+			int freshWater - fresh water percent value
+			int greyWater - grey water percent value
+			int blackWater - black water percent value
+			int battery - battery percent value
+		Return:
+			Not Applicable
+	'''
+
     #get the current time
     timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
@@ -29,7 +36,7 @@ def input(freshWater, greyWater, blackWater, battery):
          db='CamperWaterDB') 
 
         #creates cursor
-        cur = myConnection.cursor()
+        cursor = myConnection.cursor()
         #creates query
         query = "INSERT INTO CamperWaterDB.usageData" \
                 "(DateTime, Fresh_Water, Grey_Water, Black_Water, Battery)" \
@@ -37,7 +44,7 @@ def input(freshWater, greyWater, blackWater, battery):
         #vals to be inserted
         val = (timestamp, freshWater, greyWater, blackWater, battery)
         #execute query
-        cur.execute(query, val)
+        cursor.execute(query, val)
         #commit changes to query
         myConnection.commit()
 
@@ -52,25 +59,25 @@ def input(freshWater, greyWater, blackWater, battery):
 
 
 #-------------------------------------------------------------------------------
-#   Method getGraphData
-#    Description:
-#        Determines what percent of the sensor that was used, which
-#        indicates the percentage in the tanks.
-#    Parameters:
-#        int freshWater - fresh water percent value
-#        int greyWater - grey water percent value
-#        int blackWater - black water percent value
-#        int battery - battery percent value
-#    Return:
-#       int usageIdArr - an array of the id for tuple
-#       datetime dateTimeArr - array of dateTimeArr
-#       int freshWaterArr - an array of fresh water data
-#       int greyWaterArr - an array of grey water data
-#       int blackWaterArr - an array of black water data
-#       int batteryArr - an array of battery data
 def getGraphData():
+	'''
+		Description:
+			Determines what percent of the sensor that was used, which
+			indicates the percentage in the tanks.
+		Parameters:
+			freshWater : int - fresh water percent value
+			greyWater : int - grey water percent value
+			blackWater : int - black water percent value
+			battery : int - battery percent value
+		Return:
+		   dateTimeArr : datetime - array of dateTimeArr
+		   freshWaterArr : int - an array of fresh water data
+		   greyWaterArr : int - an array of grey water data
+		   blackWaterArr : int - an array of black water data
+		   batteryArr : int - an array of battery data
+	'''
+
     #Initialize variables as empty arrays
-    usageIdArr = []
     dateTimeArr = []
     freshWaterArr = []
     greyWaterArr = [] 
@@ -87,7 +94,7 @@ def getGraphData():
 
         #what will be queried in the database
         query = "select * from CamperWaterDB.usageData ORDER BY " + \
-            "usageDataID DESC"
+            "DateTime DESC"
         #buffered=True to avoid MySQL Unread result error
         cursor = myConnection.cursor(buffered=True) 
         cursor.execute(query)       #execute query
@@ -98,14 +105,13 @@ def getGraphData():
         i = 0   #initialize index incrementor  
         for row in records:
             #set index 1 as a datetime object
-            dt_obj = datetime.strptime(row[1], "%Y-%m-%d %H:%M:%S")
+            dt_obj = datetime.strptime(row[0], "%Y-%m-%d %H:%M:%S")
             #set arrays to the appropriate values
-            usageIdArr.insert(i, row[0])
             dateTimeArr.insert(i,  dt_obj)
-            freshWaterArr.insert(i, row[2])
-            greyWaterArr.insert(i, row[3])
-            blackWaterArr.insert(i, row[4])
-            batteryArr.insert(i, row[5])
+            freshWaterArr.insert(i, row[1])
+            greyWaterArr.insert(i, row[2])
+            blackWaterArr.insert(i, row[3])
+            batteryArr.insert(i, row[4])
             i = i + 1  #increment index number      
         cursor.close()
     
@@ -120,5 +126,5 @@ def getGraphData():
             myConnection.close()
 
     #returns the reverse of all arrays for graphing
-    return usageIdArr[::-1], dateTimeArr[::-1], freshWaterArr[::-1], \
+    return dateTimeArr[::-1], freshWaterArr[::-1], \
         greyWaterArr[::-1], blackWaterArr[::-1], batteryArr[::-1]
