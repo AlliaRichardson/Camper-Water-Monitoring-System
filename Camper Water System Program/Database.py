@@ -15,10 +15,10 @@ def input(freshWater, greyWater, blackWater, battery):
 			Inputs fresh water, grey water, black water, and battery into the 
 			database.
 		Parameters:
-			int freshWater - fresh water percent value
-			int greyWater - grey water percent value
-			int blackWater - black water percent value
-			int battery - battery percent value
+			freshWater : int  - fresh water percent value
+			greyWater : int  - grey water percent value
+			blackWater : int  - black water percent value
+			battery : int - battery percent value
 		Return:
 			Not Applicable
 	'''
